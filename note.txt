@@ -20,3 +20,20 @@
     1.程序的实例 进程ID getpid.c
     2.进程控制 fork waitpid exec procontrol.c
 1.7
+    出错处理 返回一个errno 通常 < 0 可以通过C标准提供的函数 strerror perror 获取错误信息
+1.8
+    用户id 组id 每个文件都存了这两个值 需要4个字节
+1.9 信号⭐️
+    用于通知进程发生了某种情况 可以使用signal函数捕捉信号后自行处理 capsig.c
+
+第二章 各种标准，看不懂
+
+第三章 文件I/O 
+3.1 
+    不带缓冲的I/O open read write lseek close
+    进程共享文件 内核数据结构 dup fcntl sync fsync ioctl 
+3.2 文件描述符
+    是一个非负整数
+    open creat时，内核将文件描述符返回给进程
+    0：标准输入 1：标准输出 2：标准错误
+    
