@@ -36,4 +36,7 @@
     是一个非负整数
     open creat时，内核将文件描述符返回给进程
     0：标准输入 1：标准输出 2：标准错误
-    
+3.3 open openat
+#include <fcntl.h>
+int open(const char *path, int oflag, ...)
+int openat(int fd, const char *path, int flag, ...)
