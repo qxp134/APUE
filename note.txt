@@ -37,6 +37,13 @@
     open creat时，内核将文件描述符返回给进程
     0：标准输入 1：标准输出 2：标准错误
 3.3 open openat
-#include <fcntl.h>
-int open(const char *path, int oflag, ...)
-int openat(int fd, const char *path, int flag, ...)
+    #include <fcntl.h>
+    int open(const char *path, int oflag, .../mode/)
+    int openat(int fd, const char *path, int oflag, .../mode/)
+    path表示路径，若为绝对路径那 open openat相同 若是相对路径 openat 顾名思义 从fd这个文件描述符所在目录去找path
+    int oflag 参数有很多规定的值，记几个常用的值就好
+    O_RDONLY 只读
+    O_WRONLY 只写
+    O_RDWR 读写
+    O_EXEC 只执行
+    O_SERACE 只搜索，用于目录
