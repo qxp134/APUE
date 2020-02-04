@@ -47,3 +47,6 @@
     O_RDWR 读写
     O_EXEC 只执行
     O_SERACE 只搜索，用于目录
+3.4 creat
+int creat(const char*path,mode_t mode)
+相当于 open(path,O_WRONLY|O_CREAT|O_TRUNC,mode)
