@@ -50,3 +50,10 @@
 3.4 creat
 int creat(const char*path,mode_t mode)
 相当于 open(path,O_WRONLY|O_CREAT|O_TRUNC,mode)
+3.5 close
+#include <unistd.h>
+int close(int fd);
+3.6 lseek
+设置文件偏移量
+#include <unistd.h>
+off_t lseek(int fd,off_t offset, int whence);
