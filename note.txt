@@ -57,3 +57,7 @@ int close(int fd);
 设置文件偏移量
 #include <unistd.h>
 off_t lseek(int fd,off_t offset, int whence);
+深信服面试时，问到像ls一样瞬间知道文件大小，既可以用这个函数
+若 whence 是 SEEK_SET 偏移量从头开始 加offset个
+若 whence 是 SEEK_CUR 偏移量从当前值开始
+若 whence 是 SEEK_END 偏移量从尾 offset 可正可负
