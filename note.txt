@@ -61,3 +61,13 @@ off_t lseek(int fd,off_t offset, int whence);
 若 whence 是 SEEK_SET 偏移量从头开始 加offset个
 若 whence 是 SEEK_CUR 偏移量从当前值开始
 若 whence 是 SEEK_END 偏移量从尾 offset 可正可负
+3.7 read
+#include <unistd.h>
+ssize_t read(int fd, void *buf, size_t nbytes);
+读到末尾返回0，还有30个字节，要求读100个字节，返回30。再读返回0。
+
+3.8 write
+#include <unistd.h>
+ssize_t write(int fd, const void *buf, size_t nbytes);
+
+3.9 I/O效率
