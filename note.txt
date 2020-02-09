@@ -48,49 +48,64 @@
     O_EXEC 只执行
     O_SERACE 只搜索，用于目录
 3.4 creat
-int creat(const char*path,mode_t mode)
-相当于 open(path,O_WRONLY|O_CREAT|O_TRUNC,mode)
+    int creat(const char*path,mode_t mode)
+    相当于 open(path,O_WRONLY|O_CREAT|O_TRUNC,mode)
 3.5 close
-#include <unistd.h>
-int close(int fd);
+    #include <unistd.h>
+    int close(int fd);
 3.6 lseek
-设置文件偏移量
-#include <unistd.h>
-off_t lseek(int fd,off_t offset, int whence);
-深信服面试时，问到像ls一样瞬间知道文件大小，既可以用这个函数
-若 whence 是 SEEK_SET 偏移量从头开始 加offset个
-若 whence 是 SEEK_CUR 偏移量从当前值开始
-若 whence 是 SEEK_END 偏移量从尾 offset 可正可负
+    设置文件偏移量
+    #include <unistd.h>
+    off_t lseek(int fd,off_t offset, int whence);
+    深信服面试时，问到像ls一样瞬间知道文件大小，既可以用这个函数
+    若 whence 是 SEEK_SET 偏移量从头开始 加offset个
+    若 whence 是 SEEK_CUR 偏移量从当前值开始
+    若 whence 是 SEEK_END 偏移量从尾 offset 可正可负
 3.7 read
-#include <unistd.h>
-ssize_t read(int fd, void *buf, size_t nbytes);
-读到末尾返回0，还有30个字节，要求读100个字节，返回30。再读返回0。
-
+    #include <unistd.h>
+    ssize_t read(int fd, void *buf, size_t nbytes);
+    读到末尾返回0，还有30个字节，要求读100个字节，返回30。再读返回0。
 3.8 write
-#include <unistd.h>
-ssize_t write(int fd, const void *buf, size_t nbytes);
-
+    #include <unistd.h>
+    ssize_t write(int fd, const void *buf, size_t nbytes);
 3.9 I/O效率
-缓存区大小选多少才能达到最大效率呢 4096字节
-
+    缓存区大小选多少才能达到最大效率呢 4096字节
 3.10 文件共享（多个进程打开同一文件）
-内核使用3中数据结构表示打开文件
-（1）每个进程在进程表中都有一个记录项，一个文件描述符对应一列，形式  文件描述符：文件描述符标志（close_on_exec）: 指向一个文件表项的指针
-（2）文件表项 形式 文件文件状态标志（读，写，同步，非阻塞等等）：文件偏移量：指向v节点表项指针
-（3）v节点，文件类型，对此文件进行各种操作的指针
-
-两个进程打开同一个文件，各有各的（2）文件表项，（3）v节点是同一个
-
+    内核使用3中数据结构表示打开文件
+    （1）每个进程在进程表中都有一个记录项，一个文件描述符对应一列，形式  文件描述符：文件描述符标志（close_on_exec）: 指向一个文件表项的指针
+    （2）文件表项 形式 文件文件状态标志（读，写，同步，非阻塞等等）：文件偏移量：指向v节点表项指针
+    （3）v节点，文件类型，对此文件进行各种操作的指针
+    两个进程打开同一个文件，各有各的（2）文件表项，（3）v节点是同一个
 3.11 原子操作
-就是一个操作中间不能断，多步组成一个操作
-原子操作pread pwrite 就是把read write 和lseek结合在一起了
-#include <unistd.h>
-ssize_t pread(int fd, void *buf, size_t nbytes, off_t offset)
-ssize_t pwrite(int fd, const void *buf, size_t nbytes, off_t offset)
-
+    就是一个操作中间不能断，多步组成一个操作
+    原子操作pread pwrite 就是把read write 和lseek结合在一起了
+    #include <unistd.h>
+    ssize_t pread(int fd, void *buf, size_t nbytes, off_t offset)
+    ssize_t pwrite(int fd, const void *buf, size_t nbytes, off_t offset)
 3.12 dup和dup2
-#include <unistd.h>
-int dup(int fd);
-int dup2(int fd,int fd2);
-dup就是再搞一个当前最小的未用的文件描述符，跟fd一起描述同一个文件
-dup2指定fd2作为新的文件描述符
+    #include <unistd.h>
+    int dup(int fd);
+    int dup2(int fd,int fd2);
+    dup就是再搞一个当前最小的未用的文件描述符，跟fd一起描述同一个文件
+    dup2指定fd2作为新的文件描述符
+3.13 sync、fsync、fdatasync
+    为了保证文件可以写入磁盘
+    sync将所有修改过的块缓冲区排入写队列 void sync(void);
+    int fsync(int fd);只对一个文件起作用，写入磁盘才返回
+    int fdatasync(int fd);与fsync类似，但是文件的数据部分写到磁盘中就返回
+3.14 以前没看明白的函数fcnlt
+    改变已打开文件的属性
+    #include<fcntl.h>
+    int fcntl(int fd, int cmd, ...);
+    第三个参数是int，当获取设置记录锁时，第三个参数是一个指向某结构的指针
+    就是获取，设置跟文件有关的一堆东西，具体是个啥东西，跟cmd有关
+    五种功能：
+    （1）跟dup一样，复制一个文件描述符 cmd=F_DUPFD F_DUPFD_CLOEXEC
+    （2）获取/设置文件描述符标志 cmd=F_GETFD或F_SETFD
+    （3）获取/设置文件状态标志 cmd=F_GETFL或F_SETFL  这是咋翻译的名词啊，真是醉，今天记住明天忘
+    （4）获取/设置异步I/O所有权 cmd=F_GETOWN或F_SETOWN
+    （5）获取/设置记录锁
+
+    很容易混淆的这两个标志在共享文件里也说了，一个在进程记录项里，一个在文件表项里
+    文件描述符标志就只有一个 FD_CLOEXEC
+    文件状态标志12个
