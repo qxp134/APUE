@@ -113,3 +113,12 @@
     也没说清是干啥的，就说是个杂货箱
 3.16 /dev/fd
     里面都是文件描述符 0，1，2，用open打开这个文件就相当于复制了文件描述符
+
+第四章 文件和目录
+4.1
+    修改属性的函数
+    文件系统结构/符号链接
+    目录操作的函数
+4.2 stat
+#include<sys/stat.h>
+int stat(const char *restrict pathname, struct stat *restrict buf);
