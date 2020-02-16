@@ -122,6 +122,6 @@
 4.2 stat
 #include<sys/stat.h>
 int stat(const char *restrict pathname, struct stat *restrict buf);
-int fstat(int fd, struct stat *restrict buf)//已开描述符的相关信息
-int lstat(const char *restrict pathname, struct stat *restrict buf)//符号链接的相关信息
-
+int fstat(int fd, struct stat *restrict buf);//已开描述符的相关信息
+int lstat(const char *restrict pathname, struct stat *restrict buf);//符号链接的相关信息
+int fstatat(int fd, const char *restrict pathname, struct stat *restrict buf,int flag);
