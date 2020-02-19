@@ -133,3 +133,9 @@
     FIFO 命名管道
     socket
     符号链接
+4.4用户，组，文件权限，这些统统略过
+4.7access faccessat
+当前用户当前组，能不能有某个权限
+#include <unistd.h>
+int access(const char* pathname,int mode);
+int faccessat(int fd,const char *pathname,int mode,int flag);
