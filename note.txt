@@ -135,7 +135,8 @@
     符号链接
 4.4用户，组，文件权限，这些统统略过
 4.7access faccessat
-当前用户当前组，能不能有某个权限
-#include <unistd.h>
-int access(const char* pathname,int mode);
-int faccessat(int fd,const char *pathname,int mode,int flag);
+    当前用户当前组，能不能有某个权限
+    #include <unistd.h>
+    int access(const char* pathname,int mode);
+    int faccessat(int fd,const char *pathname,int mode,int flag);
+    mode F_OK 是否存在 R_OK 读权限测试 W_OK 写权限测试 X_OK 执行测试
