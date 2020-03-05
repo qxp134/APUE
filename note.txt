@@ -140,3 +140,18 @@
     int access(const char* pathname,int mode);
     int faccessat(int fd,const char *pathname,int mode,int flag);
     mode F_OK 是否存在 R_OK 读权限测试 W_OK 写权限测试 X_OK 执行测试
+4.8 umask
+    屏蔽字，参数是那九个权限的或，有哪个就屏蔽哪个，权限就不给了
+    #include <sys/stat.h>
+    mode_t umask(mode_t cmask);
+4.9 chmod fchmod fchmodat
+    这个很熟悉了，改变权限，chmod参数文件目录 fchmod参数为描述符 加at都是描述符相对位置
+    函数操作里，可以先用stat取出来，在当前权限的基础上改了，再chmod进去
+    去掉哪一个权限 &～(权限S_IXGRP) 加一个 ｜ S_ISGID 
+4.10 粘着位 
+    不再需要了，但是设置以后只有超级用户和所有者能删
+4.11 chown
+    用的太多，懒得写了
+4.12文件长度
+    还是深信服那个问题，哎，当时太菜了
+    stat里拿出来的结构体里有 stat.
